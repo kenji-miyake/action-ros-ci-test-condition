@@ -9,7 +9,7 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
-  <depend>example_interfaces</depend>
+  <depend condition="$ROS_VERSION == 2">example_interfaces</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
 
