@@ -58,11 +58,11 @@ PackageNameNode::PackageNameNode(const rclcpp::NodeOptions & node_options)
   node_param_.update_rate_hz = declare_parameter<double>("update_rate_hz", 10.0);
 
   // Subscriber
-  sub_data_ = create_subscription<Int32>(
+  sub_data_ = create_subscription<GeoPoint>(
     "~/input/data", rclcpp::QoS{1}, std::bind(&PackageNameNode::onData, this, _1));
 
   // Publisher
-  pub_data_ = create_publisher<Int32>("~/output/data", 1);
+  pub_data_ = create_publisher<GeoPoint>("~/output/data", 1);
 
   // Timer
   const auto update_period_ns = rclcpp::Rate(node_param_.update_rate_hz).period();
@@ -70,7 +70,7 @@ PackageNameNode::PackageNameNode(const rclcpp::NodeOptions & node_options)
     this, get_clock(), update_period_ns, std::bind(&PackageNameNode::onTimer, this));
 }
 
-void PackageNameNode::onData(const Int32::ConstSharedPtr msg) { data_ = msg; }
+void PackageNameNode::onData(const GeoPoint::ConstSharedPtr msg) { data_ = msg; }
 
 rcl_interfaces::msg::SetParametersResult PackageNameNode::onSetParam(
   const std::vector<rclcpp::Parameter> & params)
@@ -112,13 +112,6 @@ void PackageNameNode::onTimer()
   if (!isDataReady()) {
     return;
   }
-
-  // Update
-  const auto output = data_->data + 1;
-
-  // Sample
-  pub_data_->publish(example_interfaces::build<Int32>().data(output));
-  RCLCPP_INFO(get_logger(), "input, output: %d, %d", data_->data, output);
 }
 
 }  // namespace package_name

@@ -21,12 +21,12 @@
 #include <string>
 #include <vector>
 
-#include "example_interfaces/msg/int32.hpp"
+#include "geographic_msgs/msg/geo_point.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace package_name
 {
-using example_interfaces::msg::Int32;
+using geographic_msgs::msg::GeoPoint;
 
 class PackageNameNode : public rclcpp::Node
 {
@@ -40,16 +40,16 @@ public:
 
 private:
   // Subscriber
-  rclcpp::Subscription<Int32>::SharedPtr sub_data_{};
+  rclcpp::Subscription<GeoPoint>::SharedPtr sub_data_{};
 
   // Callback
-  void onData(const Int32::ConstSharedPtr msg);
+  void onData(const GeoPoint::ConstSharedPtr msg);
 
   // Data Buffer
-  Int32::ConstSharedPtr data_{};
+  GeoPoint::ConstSharedPtr data_{};
 
   // Publisher
-  rclcpp::Publisher<Int32>::SharedPtr pub_data_{};
+  rclcpp::Publisher<GeoPoint>::SharedPtr pub_data_{};
 
   // Timer
   rclcpp::TimerBase::SharedPtr timer_{};
