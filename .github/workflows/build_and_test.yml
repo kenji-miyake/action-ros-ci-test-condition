@@ -32,6 +32,10 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
 
+      - name: Uninstall example_interfaces
+        run: |
+          sudo apt purge -y ros-${{ matrix.ros_distribution }}-example-interfaces
+
       - name: Search packages in this repository
         id: list_packages
         run: |
