@@ -42,7 +42,7 @@ jobs:
           echo ::set-output name=package_list::$(colcon list --names-only)
 
       - name: Run action-ros-ci
-        uses: kenji-miyake/action-ros-ci@add-source-command-prefix
+        uses: kenji-miyake/action-ros-ci@define-env-for-rosdep
         with:
           package-name: ${{ steps.list_packages.outputs.package_list }}
           target-ros2-distro: ${{ matrix.ros_distribution }}
