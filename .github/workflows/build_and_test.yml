@@ -27,10 +27,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Show environment variables (before setup-ros)
+        run: |
+          echo "ROS_DISTRO: $ROS_DISTRO"
+          echo "ROS_VERSION: $ROS_VERSION"
+          echo "ROS_PYTHON_VERSION: $ROS_PYTHON_VERSION"
+
       - name: Setup ROS
         uses: ros-tooling/setup-ros@v0.2
         with:
           required-ros-distributions: ${{ matrix.ros_distribution }}
+
+      - name: Show environment variables (after setup-ros)
+        run: |
+          echo "ROS_DISTRO: $ROS_DISTRO"
+          echo "ROS_VERSION: $ROS_VERSION"
+          echo "ROS_PYTHON_VERSION: $ROS_PYTHON_VERSION"
 
       - name: Search packages in this repository
         id: list_packages
